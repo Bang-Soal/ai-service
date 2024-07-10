@@ -3,5 +3,5 @@ from typing import Annotated
 from fastapi import Form
 
 class PredictingTaskType(BaseModel):
-    task: Annotated[str, Form()]
+    question: Annotated[str, Form()]
     main_type: Annotated[str, Form()]

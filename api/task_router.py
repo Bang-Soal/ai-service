@@ -21,6 +21,14 @@ async def predict_task_api():
     return JSONResponse({'data': "check api predict-task-type"})
 
 
+@router.get('/test', tags=["test aja"])
+async def predict_task_api():
+
+
+    return JSONResponse({'data': "test"})
+
+
+
 @router.get('/', tags=["main"])
 async def root():
 

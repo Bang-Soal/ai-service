@@ -18,4 +18,4 @@ async def predict_task_api(
 @router.get('/', tags=["main"])
 async def root():
 
-    return JSONResponse({'data': "hello bang soal!"})
+    return JSONResponse({'data': "hello bang soal updated!"})

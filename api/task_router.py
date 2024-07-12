@@ -14,7 +14,7 @@ async def predict_task_api(
 
     return JSONResponse({'data': prompt})
 
-@router.post('/get', tags=["Predict Task Type"])
+@router.get('/predict-type-task', tags=["Predict Task Type"])
 async def predict_task_api():
 
 

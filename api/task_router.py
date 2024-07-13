@@ -25,7 +25,7 @@ async def predict_task_api():
 async def predict_task_api():
 
 
-    return JSONResponse({'data': "test"})
+    return JSONResponse({'data': "test 2"})
 
 
 

@@ -6,6 +6,8 @@ import os
 from dotenv import load_dotenv
 
 load_dotenv()
+global access_key
+access_key = os.getenv("ACCESS_KEY")
 
 def handler(event, context):
    pass

@@ -1,15 +1,12 @@
 from openai import OpenAI
-import os
-from dotenv import load_dotenv
-
-load_dotenv()
+from service.call_env import env_data
 
 
 class build_prompt() : 
     def run(question, main_type):
          client = OpenAI(
-         organization=os.getenv("ORG_KEY_OPENAI"),
-         api_key=os.getenv("API_KEY_OPENAI")
+         organization=env_data.org_key(),
+         api_key=env_data.api_key()
          )
 
          task = """Kamu adalah sebuah sistem pendeteksi jenis soal. Kamu akan menerima dua input, yaitu [QUESTION] dan [TYPE]. Tugasmu adalah menentukan [SUBTYPE] dari kedua input tersebut.

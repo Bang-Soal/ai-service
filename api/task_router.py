@@ -1,4 +1,4 @@
-from fastapi import APIRouter
+from fastapi import APIRouter, Header
 from fastapi.responses import JSONResponse
 
 from models import PredictingTaskType
@@ -8,10 +8,10 @@ router = APIRouter()
 
 @router.post('/predict-type-task', tags=["Predict Task Type"])
 async def predict_task_api(
-    data: PredictingTaskType
+    data: PredictingTaskType,  access_key: str = Header(None)
 ):
-    print(env_data.access_key)
-    if data.access_key == env_data.access_key() : 
+    print(access_key)
+    if access_key == env_data.access_key() : 
         prompt = build_prompt.run(data.question, data.main_type)
 
         return JSONResponse({'data': prompt})
@@ -23,14 +23,6 @@ async def predict_task_api():
 
 
     return JSONResponse({'data': "check api predict-task-type"})
-
-
-@router.get('/test', tags=["test aja"])
-async def predict_task_api():
-
-
-    return JSONResponse({'data': "test 2"})
-
 
 
 @router.get('/', tags=["main"])

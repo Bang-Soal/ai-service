@@ -10,7 +10,6 @@ router = APIRouter()
 async def predict_task_api(
     data: PredictingTaskType,  access_key: str = Header(None)
 ):
-    print(access_key)
     if access_key == env_data.access_key() : 
         prompt = build_prompt.run(data.question, data.main_type)
 

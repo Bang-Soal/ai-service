@@ -159,7 +159,6 @@ Terdapat 8 kategori [TYPE]:
          - **Pemahaman Bacaan:** Soal yang menguji pemahaman terhadap isi bacaan pada teks bacaan bahasa indonesia.
          - **Semantik:** Soal yang berkaitan dengan makna kata dan kalimat dalam konteks tertentu pada teks bacaan bahasa indonesia.
          - **Sikap dan Tujuan Penulis:** Soal yang meminta analisis terhadap sikap dan tujuan penulis dalam teks pada teks bacaan bahasa indonesia.
-         - **Kesimpulan:** Sama seperti di atas, soal yang meminta penarikan kesimpulan logis dari serangkaian premis atau informasi pada teks bacaan bahasa indonesia.
          - **Penalaran Teks:** Sama seperti di atas, soal yang memerlukan analisis teks untuk menemukan pola atau hubungan logis pada teks bacaan bahasa indonesia.
          - **Pernyataan dalam Teks:** Sama seperti di atas, soal yang meminta identifikasi pernyataan yang benar atau salah dalam teks pada teks bacaan bahasa indonesia.
          - **Aturan Sinus dan Cosinus:** Soal yang berkaitan dengan penggunaan aturan sinus dan cosinus dalam trigonometri.
@@ -188,7 +187,28 @@ Terdapat 8 kategori [TYPE]:
             {"role": "user", "content": f"[QUESTION]: {question}"}, 
             {"role": "user", "content": f"[TYPE]: {main_type}"}]
          )
-         result = response.choices[0].message.content
-         result = result.replace("[SUBTYPE]:" , "")
-         result = result.strip()
+         check_constraint = False
+         while check_constraint == False : 
+            result = response.choices[0].message.content
+            result = result.replace("[SUBTYPE]:" , "")
+            result = result.strip()
+            check_constraint = build_prompt.check_output(result)
+            print(check_constraint)
+         
          return result
+    
+    def check_output(result):
+         lst_subtype = ["Author's Attitude and Writing Organisation", "Cohesion and Coherence", "Finding Detailed Information",
+                        "Inference and Conclusion", "Main Idea and Topic", "Paraphrase", "Purpose of the Text",
+                        "Reference", "Semantics", "Stated-Unstated Question", "Aritmatika Sosial", "Aturan Pencacahan",
+                        "Barisan dan Deret", "Kesimpulan", "Operasi Bilangan", "Pembacaan Grafik/Tabel", "Penalaran Teks",
+                        "Penarikan Kesimpulan", "Penelitian Sosial", "Perbandingan", "Pernyataan dalam Teks", "Persamaan Linear",
+                        "Persamaan, Pertidaksamaan Linear Satu Variabel, dan Nilai Mutlak", "Pola Bilangan dan Huruf", "Sistem Persamaan Linear Dua Variabel (SPLDV)",
+                        "Sistem Persamaan Linear Tiga Variabel (SPLTV)", "Statistika Dasar", "Analisis Bacaan dan Kepaduan Paragraf", "EYD V", "Frasa",
+                        "Ide Pokok", "Kalimat", "Kata", "Pemahaman Bacaan", "Semantik" , "Sikap dan Tujuan Penulis", "Penalaran Teks", "Pernyataan dalam Teks",
+                        "Aturan Sinus dan Cosinus", "Barisan dan Deret", "Fungsi", "Geometri", "Himpunan", "Pangkat Sederhana", "Trigonometri Dasar", "Cerita Pendek",
+                        "Reference", "Kecepatan dan Debit", "Peluang"] 
+         if result not in lst_subtype : 
+              return False
+         else :
+              return True

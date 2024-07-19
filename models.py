@@ -11,3 +11,8 @@ class ParaphraseQuestion(BaseModel):
     choice: Annotated[str, Form()]
     content: Annotated[str, Form()]
     raw_answer: Annotated[str, Form()]
+
+class CreateQuestion(BaseModel):
+    question: Annotated[str, Form()]
+    choice: Annotated[str, Form()]
+    raw_answer: Annotated[str, Form()]

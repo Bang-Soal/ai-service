@@ -16,3 +16,7 @@ class CreateQuestion(BaseModel):
     question: Annotated[str, Form()]
     choice: Annotated[str, Form()]
     raw_answer: Annotated[str, Form()]
+
+class CreateAnswer(BaseModel):
+    question: Annotated[str, Form()]
+    choice: Annotated[str, Form()]

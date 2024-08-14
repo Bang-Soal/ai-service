@@ -89,7 +89,7 @@ class paraphrase_question() :
     Dengan demikian jawaban yang benar adalah D. Neto tara
     """
 
-            model = 'gpt-4-1106-preview'
+            model = 'gpt-4o'
 
             messages = [
                             {

@@ -83,7 +83,7 @@ Dengan demikian jawaban yang benar adalah D. Neto tara
 """
 
         complation = client.chat.completions.create(
-            model = 'gpt-4o-mini',
+            model = 'gpt-4o',
             messages = [
                 {
                     "role": "system", "content": task

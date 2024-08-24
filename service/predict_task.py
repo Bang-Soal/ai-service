@@ -1,5 +1,6 @@
 from openai import OpenAI
 from service.call_env import env_data
+import re
 
 
 class build_prompt() : 
@@ -212,3 +213,55 @@ Terdapat 8 kategori [TYPE]:
               return False
          else :
               return True
+         
+    def check_type(question):
+      client = OpenAI(
+         organization=env_data.org_key(),
+         api_key=env_data.api_key()
+         )
+
+      response = client.chat.completions.create(
+      model="ft:gpt-4o-2024-08-06:bangsoal:predict-type:9yirTHab:ckpt-step-1976",
+      temperature=1,
+      max_tokens=256,
+      top_p=1,
+      frequency_penalty=0,
+      presence_penalty=0,
+      response_format={
+         "type": "text"
+      },
+      messages=[
+      {
+         "role": "system",
+         "content": [
+         {
+            "type": "text",
+            "text": "Kamu adalah sebuah sistem pendeteksi jenis soal. Kamu akan menerima input, yaitu [QUESTION] \r\n\r\nGunakan pemahaman yang kamu miliki untuk mengelompokkan berbagai jenis soal yang ada.\r\n- [QUESTION] merupakan sebuah soal yang perlu diklasifikasikan.\r\n- [QUESTION] dapat meliputi soal penalaran umum, matematika, bacaan bahasa Indonesia, atau bacaan bahasa Inggris.\r\n- [TYPE] adalah hasil klasifikasi jenis soal berdasarkan [QUESTION] \r\n- [DESCRIPTION] adalah hasil penjelasan mengapa [QUESTION] tersebut termasuk dalam [TYPE] tersebut\r\n      \r\nOutput : hanya menampilkan [TYPE] dan [DESCRIPTION] nya saja\r\nContoh Output : \"\r\n[TYPE]: Kemampuan Penalaran Umum\r\n[DESCTIPTION]: Penjelasan mengapa[QUESTION] tersebut termasuk dalam [TYPE] tersebut“\r\nOutput [TYPE] hanya diperbolehkan tipe-tipe yang telah disebutkan, tidak bisa diluar constraint yang telah diberikan\r\n      \r\nTerdapat 7 kategori [TYPE]:   \r\n1. **Kemampuan Penalaran Umum** : Komponen ini menguji kemampuan siswa dalam memecahkan masalah baru yang tidak bisa diselesaikan hanya dengan kebiasaan yang sudah dipelajari. Penalaran umum mencakup memecahkan masalah baru bernalar secara abstrak\r\n2. **Kemampuan Memahami Bacaan dan Menulis** : Komponen ini menguji kemampuan dasar dan kompleks dalam membaca dan menulis, termasuk memahami wacana tertulis dan ekspresi melalui tulisan.\r\n3. **Pengetahuan dan Pemahaman Umum** : Komponen ini mengukur kemampuan siswa dalam memahami dan mengkomunikasikan pengetahuan yang penting dalam budaya Indonesia, terutama keterampilan berbahasa dan pengetahuan umum.\r\n4. **Pengetahuan Kuantitatif**  : Pengetahuan kuantitatif adalah kedalaman dan luasnya pengetahuan yang terkait dengan matematika, yang merupakan pengetahuan yang diperoleh melalui pembelajaran dan mewakili kemampuan untuk menggunakan informasi kuantitatif dan memanipulasi simbol-simbol angka. Kemampuan ini mencakup pengetahuan mengenai ukuran perhitungan matematika, pemecahan masalah matematika, dan pengetahuan umum matematika. Pengetahuan kuantitatif berfokus juga pada Menerapkan konsep matematika dan menerapkannya dalam kehidupan sehari-hari yang beragam. Membutuhkan kemampuan untuk menerapkan konsep matematika dalam situasi yang nyata, seperti analisis data dan perbandingan statistik. Soal-soal yang ditampilkan lebih fokus pada situasi di kehidupan sehari-hari, dan menggunakan matematika untuk memecahkan suatu masalah.\r\n5. **Literasi dalam Bahasa Indonesia**  : Tes ini berfokus pada Literasi Membaca dalam Bahasa Indonesia, yang mencakup kemampuan memahami, menggunakan, mengevaluasi, merenungkan, dan berinteraksi aktif dengan teks untuk mencapai tujuan dan mengembangkan pengetahuan.\r\n6. **Literasi dalam Bahasa Inggris** : Tes ini berfokus pada Literasi Membaca dalam Bahasa Inggris, yang mencakup kemampuan memahami, menggunakan, mengevaluasi, merenungkan, dan berinteraksi aktif dengan teks untuk mencapai tujuan dan mengembangkan pengetahuan.\r\n7. **Penalaran Matematika** : Penalaran Matematika lebih berfokus pada kemampuan berpikir logis dan abstrak dalam menyelesaikan masalah matematika. Soal-soal dalam kategori ini biasanya menguji kemampuan untuk mengidentifikasi pola, melakukan deduksi, serta memahami konsep-konsep matematika yang lebih kompleks dan teoritis. Soal pada tipe ini umumnya adalah soal cerita yang diikuti dengan pertanyaan matematika. Penalaran Matematika cenderung menantang siswa untuk menggunakan logika dan berpikir kritis dalam menyelesaikan soal-soal yang tidak selalu memiliki aplikasi langsung dalam kehidupan sehari-hari. Selain itu, jika soal bersifat study case maka soal tersebut merupakan tipe ini. Penalaran matematikan juga memerlukan Pemahaman konsep sistematis dan kemampuan dalam menyelesaikan masalah secara logis.  Selain itu, beberapa karakteristik dari soal bertipe penalaran matemarika adalah penekanan pemecahan masalah matematis yang bersifat abstrak, pengukuran pemahaman konsep matematis dengan kemampuan yang logis, dan soal-soal yang ditampilkan cenderung lebih abstrak dan berfokus pada logika yang lebih matematis.\r\n"
+         }
+         ]
+      },
+      {
+         "role": "user",
+         "content": [
+         {
+            "type": "text",
+            "text": f"[QUESTION]: {question}"
+         }
+         ]
+      },
+      ],
+      )
+
+      result= response.choices[0].message.content
+      type_pattern = r'\[TYPE\]:\s*(.*?)\s*\[DESCRIPTION\]:'
+      description_pattern = r'\[DESCRIPTION\]:\s*(.*)'
+
+      # Extract TYPE using regex
+      type_match = re.search(type_pattern, result, re.DOTALL)
+      type_info = type_match.group(1).strip() if type_match else None
+
+      # Extract DESCRIPTION using regex
+      description_match = re.search(description_pattern, result, re.DOTALL)
+      description_info = description_match.group(1).strip() if description_match else None
+
+      return {'type' : type_info, 'description': description_info}

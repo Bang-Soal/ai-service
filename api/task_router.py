@@ -14,7 +14,16 @@ async def predict_task_api(
     data: PredictingTaskType,  access_key: str = Header(None)
 ):
     if access_key == env_data.access_key() : 
-        response = build_prompt.run(data.question, data.main_type)
+        if data.main_type == 'undecided' : 
+            response_type = build_prompt.check_type(data.question)
+            response = build_prompt.run(data.question, response_type['type'])
+            response = {
+                'type' : response_type['type'],
+                'subtype' : response,
+                'description' : response_type['description']
+            }
+        else :
+            response = build_prompt.run(data.question, data.main_type)
 
         return JSONResponse({'data': response})
     else : 

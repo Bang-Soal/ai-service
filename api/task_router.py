@@ -15,7 +15,7 @@ async def predict_task_api(
 ):
     if access_key == env_data.access_key() : 
         if data.main_type == 'undecided' : 
-            response_type = build_prompt.check_type(data.question)
+            response_type = build_prompt.predict_type(data.question)
             response = build_prompt.run(data.question, response_type['type'])
             response = {
                 'type' : response_type['type'],
@@ -23,7 +23,11 @@ async def predict_task_api(
                 'description' : response_type['description']
             }
         else :
-            response = build_prompt.run(data.question, data.main_type)
+            if build_prompt.check_type(data.main_type) == True:
+                response = build_prompt.run(data.question, data.main_type)
+            else :
+                return JSONResponse({'data': "Type denied"})
+
 
         return JSONResponse({'data': response})
     else : 

@@ -28,10 +28,8 @@ Terdapat 8 kategori [TYPE]:
    - **Aritmatika Sosial:** Soal yang melibatkan perhitungan matematika dalam konteks sosial sehari-hari seperti jual beli, pembagian, dan lain-lain.
    - **Aturan Pencacahan:** Soal tentang teknik menghitung banyaknya kemungkinan atau kombinasi, seperti permutasi dan kombinasi.
    - **Barisan dan Deret:** Soal yang berkaitan dengan urutan angka atau huruf yang membentuk pola tertentu.
-   - **Kesimpulan:** Soal yang meminta penarikan kesimpulan logis dari serangkaian premis atau informasi.
    - **Operasi Bilangan:** Soal yang melibatkan operasi dasar matematika seperti penjumlahan, pengurangan, perkalian, dan pembagian.
    - **Pembacaan Grafik/Tabel:** Soal yang mengharuskan interpretasi data dari grafik atau tabel.
-   - **Penalaran Teks:** Soal yang memerlukan analisis teks untuk menemukan pola atau hubungan logis.
    - **Penarikan Kesimpulan:** Soal yang memerlukan inferensi berdasarkan informasi yang diberikan.
    - **Penelitian Sosial:** Soal yang berkaitan dengan metode penelitian dan analisis data dalam konteks sosial.
    - **Perbandingan:** Soal yang memerlukan perbandingan antara dua atau lebih nilai atau konsep.
@@ -42,6 +40,8 @@ Terdapat 8 kategori [TYPE]:
    - **Sistem Persamaan Linear Dua Variabel (SPLDV):** Soal yang melibatkan sistem persamaan linear dengan dua variabel.
    - **Sistem Persamaan Linear Tiga Variabel (SPLTV):** Soal yang melibatkan sistem persamaan linear dengan tiga variabel.
    - **Statistika Dasar:** Soal yang berkaitan dengan konsep dasar statistik seperti mean, median, dan modus.
+   - **Penalaran Deduktif:** Soal yang menguji kemampuan seseorang untuk menarik kesimpulan logis yang pasti dari premis atau informasi umum yang diberikan.
+   - **Penalaran Induktif:** Soal yang menguji kemampuan seseorang untuk menarik kesimpulan umum dari sejumlah pengamatan atau contoh spesifik
 
 2. **Kemampuan Memahami Bacaan dan Menulis** memiliki 9 subtipe:
    - **Analisis Bacaan dan Kepaduan Paragraf:** Soal yang meminta analisis terhadap struktur dan koherensi paragraf dalam bacaan.
@@ -80,7 +80,7 @@ Terdapat 8 kategori [TYPE]:
    - **Sistem Persamaan Linear Dua Variabel (SPLDV):** Sama seperti di atas, soal yang melibatkan sistem persamaan linear dengan dua variabel.
    - **Trigonometri Dasar:** Soal yang berkaitan dengan konsep dasar trigonometri.
 
-5. **Literasi dalam Bahasa Indonesia** memiliki 10 subtipe:
+5. **Literasi dalam Bahasa Indonesia** memiliki 9 subtipe:
    - **Analisis Bacaan dan Kepaduan Paragraf:** Sama seperti di atas, soal yang meminta analisis terhadap struktur dan koherensi paragraf dalam bacaan.
    - **Cerita Pendek:** Soal yang berkaitan dengan analisis dan pemahaman cerita pendek.
    - **Ide Pokok:** Sama seperti di atas, soal yang meminta identifikasi ide utama dalam suatu teks.
@@ -88,7 +88,6 @@ Terdapat 8 kategori [TYPE]:
    - **Pemahaman Bacaan:** Sama seperti di atas, soal yang menguji pemahaman terhadap isi bacaan.
    - **Penalaran Teks:** Sama seperti di atas, soal yang memerlukan analisis teks untuk menemukan pola atau hubungan logis.
    - **Pernyataan dalam Teks:** Sama seperti di atas, soal yang meminta identifikasi pernyataan yang benar atau salah dalam teks.
-   - **Reference:** Soal yang berkaitan dengan penggunaan referensi dalam teks.
    - **Semantik:** Sama seperti di atas, soal yang berkaitan dengan makna kata dan kalimat dalam konteks tertentu.
    - **Sikap dan Tujuan Penulis:** Sama seperti di atas, soal yang meminta analisis terhadap sikap dan tujuan penulis dalam teks.
 
@@ -120,59 +119,6 @@ Terdapat 8 kategori [TYPE]:
    - **Sistem Persamaan Linear Tiga Variabel (SPLTV):** Sama seperti di atas, soal yang melibatkan sistem persamaan linear dengan tiga variabel.
    - **Statistika Dasar:** Sama seperti di atas, soal yang berkaitan dengan konsep dasar statistik seperti mean, median, dan modus.
    - **Trigonometri Dasar:** Sama seperti di atas, soal yang berkaitan dengan konsep dasar trigonometri.
-
-8. **Undecided** memiliki 50 subtipe dengan dua kondisi soal, yaitu soal bahasa Indonesia dan bahasa Inggris. Anda perlu mencerna terlebih dahulu soalnya apakah menggunakan bahasa Inggris atau bahasa Indonesia. Apabila soal menggunakan bahasa Inggris, anda hanya bisa memilih subtipe yang tersedia pada soal bahasa Inggris. Apabila soal menggunakan bahasa Indonesia, anda hanya bisa memilih subtipe yang tersedia pada soal bahasa Indonesia: 
-      **Soal bahasa Inggris** : 
-         - **Author's Attitude and Writing Organisation:** Soal yang menguji pemahaman terhadap sikap penulis dan struktur penulisan pada teks bahasa Inggris.
-         - **Cohesion and Coherence:** Soal yang menguji pemahaman tentang keterpaduan dan koherensi pada teks bahasa Inggris.
-         - **Finding Detailed Information:** Soal yang meminta pencarian informasi detail pada teks bahasa Inggris.
-         - **Inference and Conclusion:** Soal yang meminta penarikan inferensi dan kesimpulan pada teks bahasa Inggris.
-         - **Main Idea and Topic:** Soal yang meminta identifikasi ide pokok dan topik pada teks bahasa Inggris.
-         - **Paraphrase:** Soal yang menguji kemampuan untuk memparafrasekan pada teks bahasa Inggris.
-         - **Purpose of the Text:** Soal yang meminta identifikasi tujuan penulisan pada teks bahasa Inggris.
-         - **Reference:** Sama seperti di atas, soal yang berkaitan dengan penggunaan referensi pada teks bahasa Inggris.
-         - **Semantics:** Soal yang berkaitan dengan makna kata dan kalimat pada teks bahasa Inggris.
-         - **Stated-Unstated Question:** Soal yang menguji kemampuan untuk mengidentifikasi pertanyaan yang dinyatakan secara eksplisit atau implisit pada teks bahasa Inggris.
-      **Soal bahasa Indonesia** :  
-         - **Aritmatika Sosial:** Soal yang melibatkan perhitungan matematika dalam konteks sosial sehari-hari seperti jual beli, pembagian, dan lain-lain.
-         - **Aturan Pencacahan:** Soal tentang teknik menghitung banyaknya kemungkinan atau kombinasi, seperti permutasi dan kombinasi.
-         - **Barisan dan Deret:** Soal yang berkaitan dengan urutan angka atau huruf yang membentuk pola tertentu.
-         - **Kesimpulan:** Soal yang meminta penarikan kesimpulan logis dari serangkaian premis atau informasi.
-         - **Operasi Bilangan:** Soal yang melibatkan operasi dasar matematika seperti penjumlahan, pengurangan, perkalian, dan pembagian.
-         - **Pembacaan Grafik/Tabel:** Soal yang mengharuskan interpretasi data dari grafik atau tabel.
-         - **Penalaran Teks:** Soal yang memerlukan analisis teks untuk menemukan pola atau hubungan logis.
-         - **Penarikan Kesimpulan:** Soal yang memerlukan inferensi berdasarkan informasi yang diberikan.
-         - **Penelitian Sosial:** Soal yang berkaitan dengan metode penelitian dan analisis data dalam konteks sosial.
-         - **Perbandingan:** Soal yang memerlukan perbandingan antara dua atau lebih nilai atau konsep.
-         - **Pernyataan dalam Teks:** Soal yang meminta identifikasi pernyataan yang benar atau salah dalam teks.
-         - **Persamaan Linear:** Soal yang berkaitan dengan persamaan matematika linear.
-         - **Persamaan, Pertidaksamaan Linear Satu Variabel, dan Nilai Mutlak:** Soal yang melibatkan persamaan dan pertidaksamaan linear serta konsep nilai mutlak.
-         - **Pola Bilangan dan Huruf:** Soal yang memerlukan identifikasi pola dalam rangkaian angka atau huruf.
-         - **Sistem Persamaan Linear Dua Variabel (SPLDV):** Soal yang melibatkan sistem persamaan linear dengan dua variabel.
-         - **Sistem Persamaan Linear Tiga Variabel (SPLTV):** Soal yang melibatkan sistem persamaan linear dengan tiga variabel.
-         - **Statistika Dasar:** Soal yang berkaitan dengan konsep dasar statistik seperti mean, median, dan modus.
-         - **Analisis Bacaan dan Kepaduan Paragraf:** Soal yang meminta analisis terhadap struktur dan koherensi paragraf dalam bacaan pada teks bacaan bahasa indonesia.
-         - **EYD V:** Soal yang menguji pengetahuan tentang Ejaan yang Disempurnakan (EYD) dalam bahasa Indonesia pada teks bacaan bahasa indonesia.
-         - **Frasa:** Soal yang berkaitan dengan penggunaan dan identifikasi frasa dalam kalimat pada teks bacaan bahasa indonesia.
-         - **Ide Pokok:** Soal yang meminta identifikasi ide utama dalam suatu teks pada teks bacaan bahasa indonesia.
-         - **Kalimat:** Soal yang berkaitan dengan struktur dan fungsi kalimat pada teks bacaan bahasa indonesia.
-         - **Kata:** Soal yang menguji pemahaman tentang makna dan penggunaan kata pada teks bacaan bahasa indonesia.
-         - **Pemahaman Bacaan:** Soal yang menguji pemahaman terhadap isi bacaan pada teks bacaan bahasa indonesia.
-         - **Semantik:** Soal yang berkaitan dengan makna kata dan kalimat dalam konteks tertentu pada teks bacaan bahasa indonesia.
-         - **Sikap dan Tujuan Penulis:** Soal yang meminta analisis terhadap sikap dan tujuan penulis dalam teks pada teks bacaan bahasa indonesia.
-         - **Penalaran Teks:** Sama seperti di atas, soal yang memerlukan analisis teks untuk menemukan pola atau hubungan logis pada teks bacaan bahasa indonesia.
-         - **Pernyataan dalam Teks:** Sama seperti di atas, soal yang meminta identifikasi pernyataan yang benar atau salah dalam teks pada teks bacaan bahasa indonesia.
-         - **Aturan Sinus dan Cosinus:** Soal yang berkaitan dengan penggunaan aturan sinus dan cosinus dalam trigonometri.
-         - **Barisan dan Deret:** Sama seperti di atas, soal yang berkaitan dengan urutan angka atau huruf yang membentuk pola tertentu.
-         - **Fungsi:** Soal yang berkaitan dengan konsep fungsi dalam matematika.
-         - **Geometri:** Soal yang berkaitan dengan bentuk, ukuran, dan sifat ruang.
-         - **Himpunan:** Soal yang berkaitan dengan konsep himpunan dalam matematika.
-         - **Pangkat Sederhana:** Soal yang berkaitan dengan penggunaan dan perhitungan pangkat sederhana.
-         - **Trigonometri Dasar:** Soal yang berkaitan dengan konsep dasar trigonometri.     
-         - **Cerita Pendek:** Soal yang berkaitan dengan analisis dan pemahaman cerita pendek bahasa indonesia.
-         - **Reference:** Soal yang berkaitan dengan penggunaan referensi dalam teks pada teks bacaan bahasa indonesia.
-         - **Kecepatan dan Debit:** Soal yang berkaitan dengan perhitungan kecepatan dan debit.
-         - **Peluang:** Soal yang berkaitan dengan perhitungan probabilitas.
                
       """
 
@@ -214,7 +160,7 @@ Terdapat 8 kategori [TYPE]:
          else :
               return True
          
-    def check_type(question):
+    def predict_type(question):
       client = OpenAI(
          organization=env_data.org_key(),
          api_key=env_data.api_key()
@@ -251,6 +197,7 @@ Terdapat 8 kategori [TYPE]:
       },
       ],
       )
+      print("test")
 
       result= response.choices[0].message.content
       type_pattern = r'\[TYPE\]:\s*(.*?)\s*\[DESCRIPTION\]:'
@@ -265,3 +212,12 @@ Terdapat 8 kategori [TYPE]:
       description_info = description_match.group(1).strip() if description_match else None
 
       return {'type' : type_info, 'description': description_info}
+    
+    def check_type(question_type):
+          if str.lower(question_type) in ['kemampuan memahami bacaan dan menulis','kemampuan penalaran umum',
+                                          'literasi dalam bahasa indonesia','literasi dalam bahasa inggris',
+                                          'penalaran matematika','pengetahuan dan pemahaman umum',
+                                          'pengetahuan kuantitatif']:
+              return True
+          else :
+              return False

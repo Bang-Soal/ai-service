@@ -1,12 +1,13 @@
 from fastapi import APIRouter, Header
 from fastapi.responses import JSONResponse
 
-from models import PredictingTaskType, ParaphraseQuestion, CreateQuestion, CreateAnswer
+from models import PredictingTaskType, ParaphraseQuestion, CreateQuestion, CreateAnswer, CreateMaterial
 from service.predict_task import build_prompt
 from service.call_env import env_data
 from service.paraphrase_question import paraphrase_question
 from service.create_question import create_question
 from service.create_answer import create_answer
+from service.create_material import create_material
 router = APIRouter()
 
 @router.post('/predict-type-task', tags=["Predict Task Type"])
@@ -80,6 +81,21 @@ async def create_answer_api(
 
 @router.get('/create-answer', tags=["Create Answer"])
 async def create_answer_api():
+    return JSONResponse({'data': "check api create-answer"})
+
+@router.post('/create-material', tags=["Create Material"])
+async def create_material_api(
+    data: CreateMaterial,  access_key: str = Header(None)
+):
+    if access_key == env_data.access_key() : 
+        response = create_material.run(data.topic)
+
+        return JSONResponse({'data': response})
+    else : 
+        return JSONResponse({'data': "wrong access key. access denied"})
+
+@router.get('/create-material', tags=["Create Material"])
+async def create_material_api():
     return JSONResponse({'data': "check api create-answer"})
 
 

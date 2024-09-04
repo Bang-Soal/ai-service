@@ -20,3 +20,7 @@ class CreateQuestion(BaseModel):
 class CreateAnswer(BaseModel):
     question: Annotated[str, Form()]
     choice: Annotated[str, Form()]
+
+
+class CreateMaterial(BaseModel):
+    topic: Annotated[str, Form()]

@@ -24,3 +24,8 @@ class CreateAnswer(BaseModel):
 
 class CreateMaterial(BaseModel):
     topic: Annotated[str, Form()]
+
+class CreateQuestionIsian(BaseModel):
+    question: Annotated[str, Form()]
+    explanation: Annotated[str, Form()]
+    answer: Annotated[str, Form()]

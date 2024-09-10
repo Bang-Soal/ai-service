@@ -29,3 +29,8 @@ class CreateQuestionIsian(BaseModel):
     question: Annotated[str, Form()]
     explanation: Annotated[str, Form()]
     answer: Annotated[str, Form()]
+
+
+class CreateQuestionTrueFalse(BaseModel):
+    question: Annotated[str, Form()]
+    total_question: Annotated[str, Form()]

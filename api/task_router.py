@@ -1,7 +1,7 @@
 from fastapi import APIRouter, Header
 from fastapi.responses import JSONResponse
 
-from models import PredictingTaskType, ParaphraseQuestion, CreateQuestion, CreateAnswer, CreateMaterial, CreateQuestionIsian
+from models import *
 from service.predict_task import build_prompt
 from service.call_env import env_data
 from service.paraphrase_question import paraphrase_question
@@ -9,6 +9,7 @@ from service.create_question import create_question
 from service.create_answer import create_answer
 from service.create_question_isian import create_question_isian
 from service.create_material import create_material
+from service.create_question_true_false import create_question_true_false
 router = APIRouter()
 
 @router.post('/predict-type-task', tags=["Predict Task Type"])
@@ -83,6 +84,21 @@ async def create_question_isian_api(
 @router.get('/create-question-isian', tags=["Create Question Isian"])
 async def create_question_isian_api():
     return JSONResponse({'data': "check api create-question-isian"})
+
+@router.post('/create-question-tf', tags=["Create Question True False"])
+async def create_question_tf_api(
+    data: CreateQuestionTrueFalse,  access_key: str = Header(None)
+):
+    if access_key == env_data.access_key() : 
+        response = create_question_true_false.run(data.question, data.total_question)
+
+        return JSONResponse({'data': response})
+    else : 
+        return JSONResponse({'data': "wrong access key. access denied"})
+
+@router.get('/create-question-tf', tags=["Create Question True False"])
+async def create_question_tf_api():
+    return JSONResponse({'data': "check api create-question-tf"})
 
 @router.post('/create-answer', tags=["Create Answer"])
 async def create_answer_api(

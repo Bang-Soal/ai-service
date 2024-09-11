@@ -10,6 +10,7 @@ from service.create_answer import create_answer
 from service.create_question_isian import create_question_isian
 from service.create_material import create_material
 from service.create_question_true_false import create_question_true_false
+from service.create_question_mult_answer import create_question_mult_answer
 router = APIRouter()
 
 @router.post('/predict-type-task', tags=["Predict Task Type"])
@@ -97,6 +98,21 @@ async def create_question_tf_api(
         return JSONResponse({'data': "wrong access key. access denied"})
 
 @router.get('/create-question-tf', tags=["Create Question True False"])
+async def create_question_tf_api():
+    return JSONResponse({'data': "check api create-question-tf"})
+
+@router.post('/create-question-mult', tags=["Create Question Multiple Answer"])
+async def create_question_tf_api(
+    data: CreateQuestionMultAnswer,  access_key: str = Header(None)
+):
+    if access_key == env_data.access_key() : 
+        response = create_question_mult_answer.run(data.question)
+
+        return JSONResponse({'data': response})
+    else : 
+        return JSONResponse({'data': "wrong access key. access denied"})
+
+@router.get('/create-question-mult', tags=["Create Question Multiple Answer"])
 async def create_question_tf_api():
     return JSONResponse({'data': "check api create-question-tf"})
 

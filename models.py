@@ -34,3 +34,6 @@ class CreateQuestionIsian(BaseModel):
 class CreateQuestionTrueFalse(BaseModel):
     question: Annotated[str, Form()]
     total_question: Annotated[str, Form()]
+
+class CreateQuestionMultAnswer(BaseModel):
+    question: Annotated[str, Form()]

@@ -5,22 +5,30 @@ import re
 
 class create_question_mult_answer() : 
     def build_regex(result):
-        question_pattern = r'\[NEW_QUESTION\]:\s*(.*?)\s*\[NEW_ANSWER\]'
-        answer_pattern = r'\[NEW_ANSWER\]:\s*(.*?)\s*\[NEW_CHOICE\]'
-        choice_pattern = r'\[NEW_CHOICE\]:\s*(.*?)\s*\[NEW_FINAL_ANSWER]'
-        final_choice_pattern = r'\[NEW_FINAL_ANSWER]:\s*(.*)'
+        question_pattern = r"\[NEW_QUESTION\]:\s*(.+?)\n"
+        answer_pattern = r"\[NEW_ANSWER\]:\s*(.+?)(?=\[NEW_CHOICE\])"
+        choice_pattern = r"\[NEW_CHOICE\]:\s*((?:[A-Z]\..+?-\s*(?:TRUE|FALSE)\n?)+)"
 
         question = re.search(question_pattern, result, re.DOTALL).group(1).strip()
         answer = re.search(answer_pattern, result, re.DOTALL).group(1).strip()
-        choice = re.search(choice_pattern, result, re.DOTALL).group(1).strip()
-        final_choice = re.search(final_choice_pattern, result, re.DOTALL).group(1).strip()
-        
-        return {
-            'question' : question,
-            'choice' : choice,
-            'answer' : answer,
-            'final_answer' : final_choice
-            }
+
+        choice_matches = re.search(choice_pattern, result, re.DOTALL).group(1)
+        choices = []
+        for line in choice_matches.splitlines():
+            match = re.match(r"([A-Z])\.\s*(.+?)\s*-\s*(TRUE|FALSE)", line)
+            if match:
+                key, content, is_true = match.groups()
+                choices.append({
+                    'key': key,
+                    'content': content,
+                    'is_true': is_true == 'TRUE'
+                })
+
+        return  {
+            'Question': question,
+            'Answer': answer,
+            'Choice': choices
+        }
 
         
     
@@ -32,20 +40,20 @@ class create_question_mult_answer() :
         task = """
 Anda adalah sebuah sistem pembuat soal berjenis pilihan ganda yang dapat dipilih lebih dari satu dengan tingkat kesulitan yang lebih tinggi dibandingkan soal yang diberikan saat ini. Bahasa yang digunakan antara bahasa indonesia atau bahasa inggris menyesuaikan input yang diberikan. Penjelasan wajib menggunakan bahasa indonesia karena target penggunanya adalah siswa yang berasal dari indonesia
 URUTAN INPUT : [QUESTION]
-URUTAN OUTPUT : [NEW_QUESTION], [NEW_ANSWER], [NEW_CHOICE], [NEW_FINAL_ANSWER]
+URUTAN OUTPUT : [NEW_QUESTION], [NEW_ANSWER], [NEW_CHOICE]
 
 Soal-soal ini dapat meliputi soal penalaran umum, matematika, bacaan bahasa indonesia, atau bacaan bahasa inggris
 Soal-soal yang anda buat adalah soal BARU, anda tidak bisa merefer ke soal sebelumnya. Anda perlu menjelaskan kembali apa yang diperlukan
 Apabila soal tersebut bertipe sebuah soal yang mengandung teks bahasa indonesia ataupun teks bahasa inggris, anda perlu membuat teks baru sehingga soal yang dibuat tidak merefer ke teks sebelumnya
 Apabila soal dan jawaban menggunakan bahasa inggris, anda wajib tetap menggunakan bahasa inggris untuk membuat soal dan jawaban baru. tujuan anda bukan untuk mengartikan atau mengubah soal dan jawabannya ke bahasa indonesia
 Anda akan diberikan sebuah pertanyaan dengan label [QUESTION]
-Anda ditugaskan untuk membuat soal baru tersebut dengan memahami aspek yang telah diberikan : [QUESTION] untuk menghasilkan soal baru yang serupa, tetapi dengan tingkat kesulitan yang lebih tinggi [NEW_QUESTION], pilihan argumen TRUE-FALSE berdasarkan soal baru [NEW_CHOICE], pembahasan jawabannya [NEW_ANSWER], dan jawaban-jawaban akhirnya [NEW_FINAL_ANSWER]
+Anda ditugaskan untuk membuat soal baru tersebut dengan memahami aspek yang telah diberikan : [QUESTION] untuk menghasilkan soal baru yang serupa, tetapi dengan tingkat kesulitan yang lebih tinggi [NEW_QUESTION], pilihan argumen TRUE-FALSE berdasarkan soal baru [NEW_CHOICE], dan pembahasan jawabannya [NEW_ANSWER]
 Format dari [NEW_CHOICE] adalah sebagai berikut : 
-A. Jawaban 1
-B. Jawaban 2
-C. Jawaban 3
-D. Jawaban 4
-E. Jawaban 5
+A. Jawaban 1 - TRUE/FALSE
+B. Jawaban 2 - TRUE/FALSE
+C. Jawaban 3 - TRUE/FALSE
+D. Jawaban 4 - TRUE/FALSE
+E. Jawaban 5 - TRUE/FALSE
 
 Langkah pembuatan :
 Hal yang pertama dibuat adalah pertanyaan yang akan dijadikan sebagai [NEW_QUESTION]
@@ -59,11 +67,11 @@ Untuk soal matematika, [NEW_ANSWER] diharapkan juga menampilkan langkah-langkah 
 
 Setelah didapatkan jawaban yang ada pada [NEW_ANSWER], anda akan melanjutkan membuat [NEW_CHOICE]
 Cara pembuatan [NEW_QUESTION] adalah dengan membuat format sebagai berikut:
-A. Jawaban 1
-B. Jawaban 2
-C. Jawaban 3
-D. Jawaban 4
-E. Jawaban 5
+A. Jawaban 1 - TRUE/FALSE
+B. Jawaban 2 - TRUE/FALSE
+C. Jawaban 3 - TRUE/FALSE
+D. Jawaban 4 - TRUE/FALSE
+E. Jawaban 5 - TRUE/FALSE
 Pastikan bahwa jawaban yang ada pada [NEW_ANSWER] terdapat lebih dari salah satu pilihan yang ada di [NEW_QUESTION]
 
 
@@ -72,33 +80,40 @@ Pada [NEW_ANSWER] anda akan membaginya menjadi 3 topik, yaitu : pemahaman soal, 
 Pemahaman soal adalah paragraf yang menjelaskan maksud dan tujuan soal yang akan dibahas dengan cara menganalisis tujuan [NEW_QUESTION] yang diberikan. Selain itu, pada bagian ini anda mengambil poin-poin penting dari soal yang diberikan untuk membuat analisis anda terhadap soal tersebut
 Pembahasan pilihan jawaban adalah paragraf yang menjelaskan masing-masing jawaban (A,B,C,D,E) yang diberikan dengan bantuan analisis yang telah anda lakukan dalam memahami soal sehingga anda menemukan satu jawaban yang paling sesuai dan pembahasan setiap jawaban-jawaban yang ada. Selain itu, beri juga penjelasan mengapa setiap pilihan ini benar atau salah
 Kesimpulan adalah paragraf yang menjelaskan jawaban akhir yang dipilih dengan memilih jawaban yang benar dari choice yang disediakan pada [NEW_CHOICE]
-[NEW_FINAl_ANSWER] adalah pilihan-pilihan jawaban yang dinilai benar, cukup menampilkan huruf-hurufnya saja
-contoh: jawaban yang benar adalah A,B,dan D maka anda cuklup menulis A,B,D
 
 NOTE:
 Apabila soal bertipe matematika atau perhitungan, diharapkan pada bagian pemahaman soal anda dapat menjabarkan secara detail langkah-langkah untuk mengerjakan soal yang tetera bersamaan dengan hasil perhitungannya pada [NEW_QUESTION], tidak perlu menjelaskan satu-satu jawaban yang ada pada [NEW_CHOICE]
-Apabila soal berbahasa inggris, wajib menggunakan bahasa inggris untuk membuat [NEW_QUESTION] dan [NEW_CHOICE], tetapi untuk penjelasan yang ada pada [NEW_ANSWER] wajib menggunakan bahasa indonesia. Namun, untuk urutan keluaran tetap wajib seperti urutan ini : [NEW_QUESTION], [NEW_ANSWER], [NEW_CHOICE], [NEW_FINAl_ANSWER]
-Sebelum output dikeluarkan, mohon pastikan kembali urutan output adalah [NEW_QUESTION] dilanjutkan dengan [NEW_ANSWER] dan ditutup dengan [NEW_CHOICE] dan [NEW_FINAl_ANSWER]
+Apabila soal berbahasa inggris, wajib menggunakan bahasa inggris untuk membuat [NEW_QUESTION] dan [NEW_CHOICE], tetapi untuk penjelasan yang ada pada [NEW_ANSWER] wajib menggunakan bahasa indonesia. Namun, untuk urutan keluaran tetap wajib seperti urutan ini : [NEW_QUESTION], [NEW_ANSWER], [NEW_CHOICE]
+Sebelum output dikeluarkan, mohon pastikan kembali urutan output adalah [NEW_QUESTION] dilanjutkan dengan [NEW_ANSWER] dan ditutup dengan [NEW_CHOICE]
 
 Contoh output : 
-[NEW_QUESTION]: Lima sahabat yaitu Simon, Lila, Mira, Kira, dan Deta pergi ke pasar untuk membeli buah. Diantara mereka, empat orang membeli pisang. Simon dan Kira tidak membeli melon, yang dibeli oleh tiga di antara teman-teman mereka. Mira hanya membeli kiwi. Simon dan Lila juga tidak membeli kiwi seperti yang lainnya. Dengan detail pembelian ini, tentukan siapa yang membeli kombinasi buah yang sama?
+[NEW_QUESTION]: Dalam sebuah acara arisan, Lima teman yaitu Budi, Doni, Eka, Fina, dan Gita membeli beberapa jenis buah untuk dihidangkan. Tiga dari mereka memilih untuk membeli pisang. Budi dan Eka tidak membeli semangka berbeda dengan yang lain. Doni hanya membeli melon. Gita dan Fina juga tidak membeli melon seperti yang lainnya. Pernyataan apa saja yang bernilai tepat untuk soal ini?
 
-[NEW_ANSWER]: Dalam soal ini, kita diberikan detail belanja buah dari lima orang: Simon, Lila, Mira, Kira, dan Deta. Empat di antara mereka membeli pisang. Hal ini menunjukkan bahwa satu orang di antara mereka tidak membeli pisang. Karena Mira hanya membeli kiwi, Mira tidak membeli pisang. 
+[NEW_ANSWER]: 
+Pemahaman soal: 
+Untuk menyelesaikan soal ini, perhatikan distribusi buah yang mungkin dibeli oleh setiap orang berdasarkan informasi yang diberikan:
+- Tiga orang membeli pisang.
+- Budi dan Eka tidak membeli semangka.
+- Doni hanya membeli melon.
+- Gita dan Fina tidak membeli melon.
 
-Simon dan Kira tidak membeli melon, sehingga mereka mungkin membeli pisang atau kiwi. Namun, Simon dan Lila juga tidak membeli kiwi seperti yang lainnya, yang berarti, dari informasi yang ada, Mira, Kira, dan Deta bisa jadi yang membeli kiwi. Namun karena Simon tidak membeli kiwi dan melon, ia pasti membeli pisang saja. Lila juga tidak membeli kiwi, tetapi karena tidak ada informasi eksplisit bahwa ia tidak membeli melon, ia mungkin membeli pisang dan melon.
+Pembahasan pilihan jawaban: 
+A. Budi dan Doni - Tidak cocok karena Doni hanya membeli melon, sementara Budi tidak membeli melon dan semangka.
+B. Eka dan Doni - Tidak cocok, alasan sama dengan A.
+C. Budi dan Eka - Kombinasi buah yang dibeli bisa sama, tetapi tidak ada informasi pasti tentang buah lain yang dibeli selain pisang.
+D. Fina dan Gita - Cocok karena kedua membeli pisang dan semangka, dan tidak membeli melon.
+E. Gita dan Doni - Tidak cocok karena Doni hanya membeli melon sementara Gita tidak membeli melon.
 
-Deta tidak diberikan informasi spesifik mengenai apa yang ia tidak beli, sehingga dengan diasumsikan ia tidak dilarang dari membeli pisang dan tidak ada larangan untuk membeli kiwi atau melon, ia mungkin membelikan kombinasi dari ketiga buah tersebut.
-
-Jadi, dari analisis, Deta dan Kira memiliki kemungkinan kombinasi buah yang sama: pisang, kiwi, dan melon.
+Kesimpulan: 
+Berdasarkan analisis dan informasi yang diberikan, Fina dan Gita adalah dua orang yang membeli jenis buah yang sama persis.
 
 [NEW_CHOICE]: 
-A. Simon dan Lila membeli kombinasi buah yang sama
-B. Simon dan Mira membeli kombinasi buah yang sama
-C. Kira dan Deta membeli kombinasi buah yang sama
-D. Lila dan Deta membeli kombinasi buah yang sama
-E. Mira dan Lila membeli kombinasi buah yang sama
+A. Budi dan Doni - FALSE
+B. Eka dan Doni - FALSE
+C. Budi dan Eka - FALSE
+D. Fina dan Gita - TRUE
+E. Gita dan Doni - FALSE
 
-[NEW_FINAL_ANSWER]: C
 """
 
         complation = client.chat.completions.create(

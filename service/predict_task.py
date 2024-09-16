@@ -134,13 +134,15 @@ Terdapat 8 kategori [TYPE]:
             {"role": "user", "content": f"[QUESTION]: {question}"}, 
             {"role": "user", "content": f"[TYPE]: {main_type}"}]
          )
-         check_constraint = False
-         while check_constraint == False : 
-            result = response.choices[0].message.content
-            result = result.replace("[SUBTYPE]:" , "")
-            result = result.strip()
-            check_constraint = build_prompt.check_output(result)
-            print(check_constraint)
+
+         result = response.choices[0].message.content
+         result = result.replace("[SUBTYPE]:" , "")
+         result = result.strip()
+
+         check_constraint = build_prompt.check_output(result)
+
+         if(check_constraint == False):
+             return "Subtype result not found"
          
          return result
     
@@ -154,7 +156,7 @@ Terdapat 8 kategori [TYPE]:
                         "Sistem Persamaan Linear Tiga Variabel (SPLTV)", "Statistika Dasar", "Analisis Bacaan dan Kepaduan Paragraf", "EYD V", "Frasa",
                         "Ide Pokok", "Kalimat", "Kata", "Pemahaman Bacaan", "Semantik" , "Sikap dan Tujuan Penulis", "Penalaran Teks", "Pernyataan dalam Teks",
                         "Aturan Sinus dan Cosinus", "Barisan dan Deret", "Fungsi", "Geometri", "Himpunan", "Pangkat Sederhana", "Trigonometri Dasar", "Cerita Pendek",
-                        "Reference", "Kecepatan dan Debit", "Peluang"] 
+                        "Reference", "Kecepatan dan Debit", "Peluang", "Penalaran Deduktif", "Penalaran Induktif"] 
          if result not in lst_subtype : 
               return False
          else :
@@ -197,7 +199,6 @@ Terdapat 8 kategori [TYPE]:
       },
       ],
       )
-      print("test")
 
       result= response.choices[0].message.content
       type_pattern = r'\[TYPE\]:\s*(.*?)\s*\[DESCRIPTION\]:'

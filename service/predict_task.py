@@ -215,7 +215,7 @@ Terdapat 8 kategori [TYPE]:
       check_constraint = build_prompt.check_type(type_info)
 
       if(check_constraint == False):
-             return "Subtype result not found"
+             return "Type result not found"
          
       return {'type' : type_info, 'description': description_info}
     

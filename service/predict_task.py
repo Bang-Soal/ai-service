@@ -212,6 +212,11 @@ Terdapat 8 kategori [TYPE]:
       description_match = re.search(description_pattern, result, re.DOTALL)
       description_info = description_match.group(1).strip() if description_match else None
 
+      check_constraint = build_prompt.check_type(type_info)
+
+      if(check_constraint == False):
+             return "Type result not found"
+         
       return {'type' : type_info, 'description': description_info}
     
     def check_type(question_type):

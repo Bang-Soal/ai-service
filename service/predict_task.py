@@ -21,9 +21,17 @@ Gunakan pemahaman yang kamu miliki untuk mengelompokkan berbagai jenis soal yang
       
 Output : hanya menampilkan [SUBTYPE] nya saja
 Contoh Output " [SUBTYPE]: Aritmatika Sosial
-Output hanya diperbolehkan subtipe-subtipe yang telah disebutkan, tidak bisa diluar constraint yang telah diberikan
+Output hanya dapat memilih satu di antara 7 tipe yang tersedia, yaitu : 
+- Kemampuan Penalaran Umum
+- Kemampuan Memahami Bacaan dan Menulis
+- Pengetahuan dan Pemahaman Umum
+- Pengetahuan Kuantitatif
+- Literasi dalam Bahasa Indonesia
+- Literasi dalam Bahasa Inggris
+- Penalaran Matematika
+Anda tidak dapat mengeluarkan output selain 7 tipe yang ada di atas
       
-Terdapat 8 kategori [TYPE]:   
+Terdapat 7 kategori [TYPE]:   
 1. **Kemampuan Penalaran Umum** memiliki 17 subtipe:
    - **Aritmatika Sosial:** Soal yang melibatkan perhitungan matematika dalam konteks sosial sehari-hari seperti jual beli, pembagian, dan lain-lain.
    - **Aturan Pencacahan:** Soal tentang teknik menghitung banyaknya kemungkinan atau kombinasi, seperti permutasi dan kombinasi.

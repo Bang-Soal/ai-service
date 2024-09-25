@@ -41,7 +41,7 @@ Dengan demikian, anda perlu melakukan parafrase pada soal agar tidak membuat soa
 Soal yang anda buat hanya perlu memiliki satu jawaban final, bukan soal yang bisa diisi dengan lebih dari 1 jawaban (memiliki banyak kemungkinan)
 Apabila soal dan jawaban menggunakan bahasa inggris, anda wajib tetap menggunakan bahasa inggris untuk membuat soal dan jawaban baru. tujuan anda bukan untuk mengartikan atau mengubah soal dan jawabannya ke bahasa indonesia
 Anda akan diberikan sebuah pertanyaan dengan label [QUESTION] tanpa ada bagian blank [FILL] dan jawaban dari question tersebut [ANSWER]
-Anda ditugaskan untuk membuat soal baru tersebut dengan memahami ketiga aspek yang telah diberikan : [QUESTION] untuk menghasilkan soal baru yang serupa, [ANSWER] penjelasan jawaban dari [QUESTION], dan [FINAL_ANSWER] jawaban dari [QUESTION]. Hasilnya adalah soal  tetapi dengan tingkat kesulitan yang lebih tinggi [NEW_QUESTION] dan anda perlu membuat [FILL] sebagai penanda blank yang ada di [NEW_QUESTION] (hal ini didasari karena anda membuat sebuah soal bertipe isian), pembahasan jawabannya [NEW_ANSWER], dan jawaban akhir [NEW_FINAL_ANSWER]
+Anda ditugaskan untuk membuat soal baru tersebut dengan memahami ketiga aspek yang telah diberikan : [QUESTION] untuk menghasilkan soal baru yang serupa dengan [FILL] sebagai bagian blanknya, [ANSWER] penjelasan jawaban dari [QUESTION], dan [FINAL_ANSWER] jawaban dari [QUESTION]. Hasilnya adalah soal  tetapi dengan tingkat kesulitan yang lebih tinggi [NEW_QUESTION] dan anda perlu membuat [FILL] sebagai penanda blank yang ada di [NEW_QUESTION] (hal ini didasari karena anda membuat sebuah soal bertipe isian), pembahasan jawabannya [NEW_ANSWER], dan jawaban akhir [NEW_FINAL_ANSWER]
 
 Langkah pembuatan :
 Hal yang pertama dibuat adalah pertanyaan yang akan dijadikan sebagai [NEW_QUESTION] dan anda perlu membuat [FILL] sebagai penanda bagian blank yang ada di [NEW_QUESTION]
@@ -59,6 +59,7 @@ Kesimpulan adalah paragraf yang merangkum pembahasan serta menyertakan jawaban a
 NOTE:
 Apabila soal bertipe matematika atau perhitungan, diharapkan pada bagian pemahaman soal anda dapat menjabarkan secara detail langkah-langkah untuk mengerjakan soal yang tetera bersamaan dengan hasil perhitungannya pada [NEW_QUESTION]
 Sebelum output dikeluarkan, mohon pastikan kembali urutan output adalah [NEW_QUESTION] dilanjutkan dengan [NEW_ANSWER] dan ditutup dengan [NEW_FINAL_ANSWER]
+Pastikan [NEW_QUESTION] terdapat sebuah [FILL] yang penanda sebagai blank
 """
         bc_question = """
 Panitia jalan sehat akan membuat kupon bernomor yang terdiri atas 4 angka yang disusun oleh angkaangka \( 0,1,3,5 \) dan 7 . Jika angka pertama atau terakhir tidak 0 , maka banyak kupon yang dapat dibuat adalah ....

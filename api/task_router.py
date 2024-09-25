@@ -11,6 +11,7 @@ from service.create_question_isian import create_question_isian
 from service.create_material import create_material
 from service.create_question_true_false import create_question_true_false
 from service.create_question_mult_answer import create_question_mult_answer
+from service.create_answer_isian import create_answer_isian
 router = APIRouter()
 
 @router.post('/predict-type-task', tags=["Predict Task Type"])
@@ -129,6 +130,22 @@ async def create_answer_api(
 
 @router.get('/create-answer', tags=["Create Answer"])
 async def create_answer_api():
+    return JSONResponse({'data': "check api create-answer"})
+
+@router.post('/create-answer-isian', tags=["Create Answer Isian"])
+async def create_answer_isian_api(
+    data: CreateAnswerIsian ,  access_key: str = Header(None)
+):
+    if access_key == env_data.access_key() : 
+        print(data)
+        response = create_answer_isian.run(data.question, data.answer, data.description)
+
+        return JSONResponse({'data': response})
+    else : 
+        return JSONResponse({'data': "wrong access key. access denied"})
+
+@router.get('/create-answer-isian', tags=["Create Answer Isian"])
+async def create_answer_isian_api():
     return JSONResponse({'data': "check api create-answer"})
 
 @router.post('/create-material', tags=["Create Material"])

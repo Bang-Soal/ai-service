@@ -42,3 +42,28 @@ class CreateQuestionTrueFalse(BaseModel):
 
 class CreateQuestionMultAnswer(BaseModel):
     question: Annotated[str, Form()]
+
+class CreateAnswerMultAnswer(BaseModel):
+    question: Annotated[str, Form(), Field(default="etergantungan masyarakat global terhadap penggunaan produk plastik, khususnya botol plastik, telah menyebabkan berbagai dampak lingkungan dan kesehatan yang signifikan. Setiap tahun, miliaran botol plastik digunakan dan banyak di antaranya berakhir di tempat pembuangan sampah, menciptakan masalah tata kelola limbah yang besar karena plastik membutuhkan waktu yang sangat lama untuk terdegradasi, sekitar 450 hingga 1.000 tahun. Selain itu, botol plastik yang didaur ulang pun menghasilkan dampak kesehatan negatif karena pelepasan zat kimia seperti Bisphenol A (BPA), yang berdampak buruk pada keseimbangan hormon tubuh dan berpotensi mengarah pada berbagai gangguan kesehatan seperti diabetes dan obesitas. Pernyataan mana yang secara akurat mendeskripsikan problematika yang diuraikan dalam teks terkait dengan penggunaan plastik ini?")]
+    choice: Annotated[str, Form(), Field(default="""A. Meningkatkan penggunaan plastik mengurangi polusi lingkungan 
+B. Plastik yang didaur ulang aman untuk kesehatan manusia 
+C. Peningkatan penggunaan botol plastik merespons kebutuhan masyarakat namun menciptakan masalah lingkungan dan kesehatan 
+D. Plastik terurai dengan cepat sehingga mengurangi beban di tempat pembuangan sampah 
+E. Upaya mendaur ulang secara penuh menyelesaikan problem plastik """)]
+    answer: Annotated[str, Form(),Field(default="C")]
+    description: Annotated[str, Form(),Field(default="Berdasarkan teks, peningkatan kebergantungan terhadap produk plastik, khususnya botol, menciptakan masalah yang serius baik terhadap lingkungan maupun kesehatan manusia, dan usaha daur ulang belum sepenuhnya menyelesaikan masalah tersebut.")]
+
+class CreateAnswerTF(BaseModel):
+    question: Annotated[str, Form(), Field(default="""Penggunaan plastik dalam kehidupan sehari-hari memiliki dampak pada kesehatan dan lingkungan. Produk plastik seperti kantong plastik yang sering digunakan dalam berbelanja memiliki sifat yang tahan lama dan tidak mudah terurai. Plastik dapat bertahan di lingkungan selama hingga 500 tahun. Dengan penggunaan yang masif dan berkelanjutan, plastik telah menyumbangkan jumlah sampah yang besar, yang memiliki dampak langsung pada ekosistem dan kesehatan manusia.  
+
+Kantong plastik dianggap sebagai salah satu penyumbang utama polusi karena sifatnya yang tahan lama dan produksinya yang murah. Dampak lingkungan dari kantong plastik muncul ketika mereka tidak dibuang dengan benar, mengakibatkan polusi visual di perkotaan dan bahkan mempengaruhi kehidupan hewan yang salah memakan plastik sebagai makanan. Selain itu, kantong plastik juga dapat merilis zat berbahaya seperti Bisphenol A (BPA) saat terurai, yang memiliki konsekuensi serius terhadap kesehatan, merusak hormon dan meningkatkan risiko penyakit seperti gangguan hormonal, kanker, dan efek reproduktif.
+
+Berbagai upaya telah dilakukan untuk mengurangi penggunaan kantong plastik, termasuk pengenaan tarif, pelarangan penggunaan, dan mempromosikan tas belanja yang dapat digunakan kembali. Meskipun demikian, tantangan tetap ada karena keefektifan kebijakan-kebijakan ini masih terbatas dan penggunaan kantong plastik masih tinggi di berbagai bagian dunia. Manakah pernyataan tersebut yang bernilai benar?""")]
+    choice: Annotated[str, Form(), Field(default="""1. Kantong plastik dapat bertahan hingga 500 tahun di lingkungan 
+2. Penggunaan kembali kantong plastik tidak mempengaruhi kesehatan manusia 
+3. Kebijakan larangan penggunaan kantong plastik telah efektif mengurangi polusi plastik di seluruh dunia 
+4. Kantong plastik baik untuk kehidupan manusia""")]
+    description: Annotated[str, Form(), Field(default="""1. Kantong plastik dapat bertahan hingga 500 tahun di lingkungan - TRUE
+2. Penggunaan kembali kantong plastik tidak mempengaruhi kesehatan manusia - FALSE
+3. Kebijakan larangan penggunaan kantong plastik telah efektif mengurangi polusi plastik di seluruh dunia - FALSE
+4. Kantong plastik baik untuk kehidupan manusia - FALSE""")]

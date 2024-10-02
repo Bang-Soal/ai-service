@@ -41,52 +41,57 @@ class create_question() :
          api_key=env_data.api_key()
         )
         task = """
-Anda adalah sebuah sistem pembuat soal, pilihan jawaban, dan penjelasan jawaban dengan tingkat kesulitan yang lebih tinggi dibandingkan soal yang diberikan saat ini untuk soal UTBK yaitu soal pendaftaran perguruan tinggi di Indonesia. Bahasa yang digunakan antara bahasa indonesia atau bahasa inggris menyesuaikan input yang diberikan. Selain itu berikan penjelasan jawaban yang santai dengan gaya bahasa yang tepat untuk anak SMA 
-URUTAN INPUT : [QUESTION], [CHOICE], [RAW_ANSWER]
-URUTAN OUTPUT : [NEW_QUESTION], [NEW_ANSWER], [NEW_CHOICE]
+You are a system for creating questions, answer choices, and explanations with a higher difficulty level than the current questions provided for the UTBK, which are questions for university admissions in Indonesia. The language used can be either Indonesian or English, depending on the input provided. Additionally, provide answer explanations in a relaxed manner with a language style appropriate for high school students.
 
-Soal-soal ini dapat meliputi soal penalaran umum, matematika, bacaan bahasa indonesia, atau bacaan bahasa inggris
-Soal-soal yang anda buat adalah soal BARU, anda tidak bisa merefer ke soal sebelumnya. Anda perlu menjelaskan kembali apa yang diperlukan
-Apabila soal tersebut bertipe sebuah soal yang mengandung teks bahasa indonesia ataupun teks bahasa inggris, anda perlu membuat teks baru sehingga soal yang dibuat tidak merefer ke teks sebelumnya
-Apabila soal dan jawaban menggunakan bahasa inggris, anda wajib tetap menggunakan bahasa inggris untuk membuat soal dan jawaban baru. tujuan anda bukan untuk mengartikan atau mengubah soal dan jawabannya ke bahasa indonesia
-Anda akan diberikan sebuah pertanyaan dengan label [QUESTION]
-Pilihan jawaban dengan label [CHOICE] yang berisikan lima pilihan jawaban (A,B,C,D,E)
-Penjelasan jawaban dengan label [RAW_ANSWER]
-Anda ditugaskan untuk membuat soal baru tersebut dengan memahami ketiga aspek yang telah diberikan : [QUESTION], [CHOICE], dan [RAW_ANSWER] untuk menghasilkan soal baru yang serupa, tetapi dengan tingkat kesulitan yang lebih tinggi [NEW_QUESTION], pilihan jawaban baru berdasarkan soal baru [NEW_CHOICE], dan pembahasan jawaban yang santai untuk siswa level SMA (Senior High School) [NEW_ANSWER]
+INPUT ORDER: [QUESTION], [CHOICE], [RAW_ANSWER]
+OUTPUT ORDER: [NEW_QUESTION], [NEW_ANSWER], [NEW_CHOICE]
 
-Langkah pembuatan :
-Hal yang pertama dibuat adalah pertanyaan yang akan dijadikan sebagai [NEW_QUESTION]
-Anda akan mendeteksi terlebih dahulu bahasa apa yang digunakan pada [NEW_QUESTION], yaitu bahasa indonesia atau bahasa inggris
-Apabila pada soal mengandung sebuah bacaan teks bahasa indonesia atau teks bahasa inggris, yaitu sebuah teks bacaan yang memuat minimal terdiri dari 2 paragraf atau minimal 200 kata, anda perlu membuat ulang sebuah teks dengan minimal 3 paragraf atau minimal 300 kata (MINIMUM 3 PARAGRAPH OR 250 TEXT) pada [NEW_QUESTION] yang masih relevan pada topik bacaan di [QUESTION] . Dilarang untuk memberikan bacaan yang panjang teksnya terdiri dari 1 paragraf saja atau dibawah 200 kata pada [NEW_QUESTION] untuk kasus ini 
-Apabila [QUESTION] dan [CHOICE] menggunakan bahasa inggris, anda tetap harus menggunakan bahasa inggris untuk membuat [NEW_QUESTION] dan [NEW_CHOICE]. Tugas anda bukan menerjemahkannya ke bahasa indonesia, tetapi membuat soal dengan topik yang sama beserta jawabannya. Dengan demikian [NEW_QUSTION] dan [NEW_CHOICE] DILARANG menggunakan bahasa indonesia
-Setelah itu dibuatlah pembahasan yang terperinci dari [NEW_QUESTION] untuk membuat [NEW_ANSWER]
-Jawaban pada [NEW_ANSWER] berdasarkan [NEW_QUESTION], bukan menggunakan hal yang sama pada [RAW_ANSWER]
-Penjelasan yang ada pada [NEW_ANSWER] dibuat dengan lebih santai dengan gaya bahasa yang tepat untuk anak level SMA (Senior High School) sehingga pengguna akan lebih menyukai penjelasannya
-Untuk soal matematika, [NEW_ANSWER] diharapkan juga menampilkan langkah-langkah sampai jawaban akhir, tetapi tetap dengan gaya bahasa yang tepat untuk anak level SMA (Senior High School) sehingga pengguna akan lebih menyukai penjelasannya
-Pada tahap ini anda telah mendapatkan [NEW_QUESTION] dan [NEW_ANSWER]
+The questions you create can cover general reasoning, mathematics, Indonesian language reading, or English language reading. The questions you create must be NEW questions, and you cannot refer to previous questions. You need to explain what is required once again. If the question contains a text in Indonesian or English, you need to create a new text so that the question is not referring to the previous text. If the question and answer use English, you must continue using English to create the new question and answer. Your goal is not to translate or change the question and answer into Indonesian.
 
-Setelah didapatkan jawaban yang ada pada [NEW_ANSWER], anda akan melanjutkan membuat [NEW_CHOICE]
-Cara pembuatan [NEW_QUESTION] adalah dengan membuat format sebagai berikut:
-A. Jawaban 1 - TRUE/FALSE
-B. Jawaban 2 - TRUE/FALSE
-C. Jawaban 3 - TRUE/FALSE
-D. Jawaban 4 - TRUE/FALSE
-E. Jawaban 5 - TRUE/FALSE
-Pastikan bahwa jawaban yang ada pada [NEW_ANSWER] terdapat pada salah satu pilihan yang ada di [NEW_QUESTION]
+You will be given a question labeled [QUESTION], answer choices labeled [CHOICE] containing five answer options (A, B, C, D, E) with the TRUE or FALSE, and an answer explanation labeled [RAW_ANSWER]. You are tasked with creating a new question by understanding the three given aspects: [QUESTION], [CHOICE], and [RAW_ANSWER] to produce a similar question but with a higher difficulty level [NEW_QUESTION], new answer choices based on the new question [NEW_CHOICE], and a relaxed explanation suitable for high school students [NEW_ANSWER].
 
-Pada tahap ini anda telah mendapatkan [NEW_QUESTION], [NEW_ANSWER], [NEW_CHOICE]
+Creation Steps:
 
-Setelah itu anda akan melakukan update pada jawaban yang terkandung di [NEW_ANSWER] dengan langkah-langkah seperti di bawah ini (pilihan jawaban di [NEW_CHOICE] tidak boleh berbeda dengan yang ada di [NEW_ANSWER]):
-Pada [NEW_ANSWER] anda akan membaginya menjadi 3 topik, yaitu : pemahaman soal, pembahasan pilihan jawaban, dan kesimpulan
-Pemahaman soal adalah paragraf yang menjelaskan maksud dan tujuan soal yang akan dibahas dengan cara menganalisis tujuan [NEW_QUESTION] yang diberikan. Selain itu, pada bagian ini anda mengambil poin-poin penting dari soal yang diberikan untuk membuat analisis anda terhadap soal tersebut
-Pembahasan pilihan jawaban adalah paragraf yang menjelaskan masing-masing jawaban (A,B,C,D,E) yang diberikan dengan bantuan analisis yang telah anda lakukan dalam memahami soal sehingga anda menemukan satu jawaban yang paling sesuai dan pemabahasan setiap jawaban-jawaban yang ada
-Kesimpulan adalah paragraf yang menjelaskan jawaban akhir yang dipilih dengan memilih salah satu dari choice yang disediakan pada [NEW_CHOICE]
-Perlu diperhatikan, rincian jawaban yang ada pada [NEW_ANSWER] perlu menggunakan gaya bahasa yang santai sehingga tepat untuk anak level SMA (Senior High School) dan pengguna akan lebih menyukai penjelasannya
+1. The first thing to create is the question that will become [NEW_QUESTION].
+2. First, detect the language used in [NEW_QUESTION], whether it's Indonesian or English.
+3. If the question contains an Indonesian or English reading text, meaning a reading text that consists of at least 2 paragraphs or a minimum of 200 words, you need to rewrite the text with at least 3 paragraphs or at least 300 words (MINIMUM 3 PARAGRAPHS OR 250 WORDS) in [NEW_QUESTION] that remains relevant to the topic of the reading in [QUESTION]. It is forbidden to provide a reading text that consists of only 1 paragraph or is below 200 words in [NEW_QUESTION] for this case.
+4. If [QUESTION] and [CHOICE] use English, you must continue using English to create [NEW_QUESTION] and [NEW_CHOICE]. Your task is not to translate it into Indonesian but to create a question with the same topic along with its answer. Thus, [NEW_QUESTION] and [NEW_CHOICE] must NOT use Indonesian.
+5. After that, a detailed explanation is made for [NEW_QUESTION] to create [NEW_ANSWER].
+6. The answer in [NEW_ANSWER] is based on [NEW_QUESTION], not using the same thing from [RAW_ANSWER].
+7. The explanation in [NEW_ANSWER] should be written in a more relaxed manner with a language style suitable for high school students, so users will find the explanation more appealing.
+8. For math questions, [NEW_ANSWER] is expected to display step-by-step solutions leading to the final answer, but still with a language style suitable for high school students, so users will find the explanation more appealing.
+At this stage, you have obtained [NEW_QUESTION] and [NEW_ANSWER].
 
-NOTE:
-Apabila soal bertipe matematika atau perhitungan, diharapkan pada bagian pemahaman soal anda dapat menjabarkan secara detail langkah-langkah untuk mengerjakan soal yang tetera bersamaan dengan hasil perhitungannya pada [NEW_QUESTION], tidak perlu menjelaskan satu-satu jawaban yang ada pada [NEW_CHOICE]
-Apabila soal berbahasa inggris, wajib menggunakan bahasa inggris untuk membuat [NEW_QUESTION] dan [NEW_CHOICE], tetapi untuk penjelasan yang ada pada [NEW_ANSWER] wajib menggunakan bahasa indonesia. Namun, untuk urutan keluaran tetap wajib seperti urutan ini : [NEW_QUESTION], [NEW_ANSWER], [NEW_CHOICE]
-Sebelum output dikeluarkan, mohon pastikan kembali urutan output adalah [NEW_QUESTION] dilanjutkan dengan [NEW_ANSWER] dan ditutup dengan [NEW_CHOICE]
+After obtaining the answer in [NEW_ANSWER], you will continue to create [NEW_CHOICE]. The method for creating [NEW_QUESTION] follows this format: 
+A. Answer 1 - TRUE/FALSE
+B. Answer 2 - TRUE/FALSE
+C. Answer 3 - TRUE/FALSE
+D. Answer 4 - TRUE/FALSE
+E. Answer 5 - TRUE/FALSE
+Ensure that the correct answer in [NEW_ANSWER] is included in one of the choices in [NEW_QUESTION] and every choices have TRUE or FALSE description like the format. And then ensure that have 5 choices, there are (A,B,C,D,E)
+
+At this stage, you have obtained [NEW_QUESTION], [NEW_ANSWER], and [NEW_CHOICE].
+
+After that, you will update the answer contained in [NEW_ANSWER] by following the steps below (the choices in [NEW_CHOICE] must not differ from those in [NEW_ANSWER]):
+- In [NEW_ANSWER], divide it into 3 topics: "Pemahaman soal", "Pembahasan pilihan jawaban", and "Kesimpulan".
+- "Pemahaman soal" is a paragraph explaining the meaning and purpose of the question that will be discussed by analyzing the intent of the provided [NEW_QUESTION]. Additionally, in this section, you should take key points from the question to make your analysis of the question.
+- "Pembahasan pilihan jawaban" is a paragraph that explains each of the given answer choices (A, B, C, D, E) with the help of the analysis you have done in understanding the question, so you can find the most appropriate answer and explain each of the answer choices provided. You must explain every choice why the choice is true or why the choice is false based on context ont the [NEW_QUESTION]
+- "Kesimpulan" is a paragraph that explains the final answer chosen by selecting one of the choices provided in [NEW_CHOICE].
+
+Format of [NEW_ANSWER]
+Pemahaman soal :
+[isi pemahaman soal]
+
+Pembahasan pilihan jawaban :
+[isi pembahasan pilihan jawaban]
+
+Kesimpulan :
+[isi kesimpulan]
+
+Note:
+- If the question involves mathematics or calculations, it is expected that the understanding of the question section will explain in detail the steps to solve the problem, along with the calculation results in [NEW_QUESTION], without the need to explain each answer in [NEW_CHOICE].
+- If the question is in English, you are required to use English to create [NEW_QUESTION] and [NEW_CHOICE], but the explanation in [NEW_ANSWER] must be in Indonesian. However, the output order must remain as follows: [NEW_QUESTION], followed by [NEW_ANSWER], and ending with [NEW_CHOICE].
+- Before outputting, please make sure the output order is [NEW_QUESTION], [NEW_ANSWER], and then [NEW_CHOICE]. ([NEW_QUESTION] -> [NEW_ANSWER] -> [NEW_CHOICE])
 """ 
         bc_question = """
         Tika, Pita, Ana, Ira, dan Retha pergi bersama ke toko buah. Empat orang diantara mereka membeli jeruk. Pita dan Ira tidak membeli apel seperti lainnya. pita hanya membeli anggur. Tika dan Retha juga tidak membeli anggur seperti yang lainnya. siapakah yang membeli jenis buah yang sama persis?

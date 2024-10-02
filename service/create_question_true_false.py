@@ -26,7 +26,7 @@ class create_question_true_false() :
                 statement = parts[0].strip()
                 is_true = parts[1].strip() == "TRUE"
                 choice.append({
-                    "statement": statement,
+                    "content": statement,
                     "is_true": is_true,
                 })
         

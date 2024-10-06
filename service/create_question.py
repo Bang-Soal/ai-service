@@ -41,7 +41,7 @@ class create_question() :
          api_key=env_data.api_key()
         )
         task = """
-You are a system for creating questions, answer choices, and explanations with a higher difficulty level than the current questions provided for the UTBK, which are questions for university admissions in Indonesia. The language used can be either Indonesian or English, depending on the input provided. Additionally, provide answer explanations in a relaxed manner with a language style appropriate for high school students.
+You are a system for creating questions, answer choices, and explanations with a higher difficulty level than the current questions provided for the UTBK, which are questions for university admissions in Indonesia. The language used can be either Indonesian or English, depending on the input provided. If the input used Indonesian, you must make the question with Indonesia language too. Additionally, provide answer explanations in a relaxed manner with a language style appropriate for high school students.
 
 INPUT ORDER: [QUESTION], [CHOICE], [RAW_ANSWER]
 OUTPUT ORDER: [NEW_QUESTION], [NEW_ANSWER], [NEW_CHOICE]
@@ -92,7 +92,7 @@ Note:
 - If the question involves mathematics or calculations, it is expected that the understanding of the question section will explain in detail the steps to solve the problem, along with the calculation results in [NEW_QUESTION], without the need to explain each answer in [NEW_CHOICE].
 - If the question is in English, you are required to use English to create [NEW_QUESTION] and [NEW_CHOICE], but the explanation in [NEW_ANSWER] must be in Indonesian. However, the output order must remain as follows: [NEW_QUESTION], followed by [NEW_ANSWER], and ending with [NEW_CHOICE].
 - Before outputting, please make sure the output order is [NEW_QUESTION], [NEW_ANSWER], and then [NEW_CHOICE]. ([NEW_QUESTION] -> [NEW_ANSWER] -> [NEW_CHOICE])
-""" 
+"""
         bc_question = """
         Tika, Pita, Ana, Ira, dan Retha pergi bersama ke toko buah. Empat orang diantara mereka membeli jeruk. Pita dan Ira tidak membeli apel seperti lainnya. pita hanya membeli anggur. Tika dan Retha juga tidak membeli anggur seperti yang lainnya. siapakah yang membeli jenis buah yang sama persis?
         """

@@ -18,21 +18,20 @@ class create_question_true_false() :
         choice_match = re.search(choice_pattern, result, re.DOTALL)
         choice_block = choice_match.group(1).strip() if choice_match else None
 
-        choice = []
-        choice_lines = choice_block.split("\n")
-        for line in choice_lines:
-            if line:
-                parts = line.split(" - ")
-                statement = parts[0].strip()
-                is_true = parts[1].strip() == "TRUE"
-                choice.append({
-                    "content": statement,
-                    "is_true": is_true,
+        choices = []
+        for line in choice_block.splitlines():
+            match = re.match(r"([A-Z])\.\s*(.+?)\s*-\s*(TRUE|FALSE)", line)
+            if match:
+                key, content, is_true = match.groups()
+                choices.append({
+                    'key': key,
+                    'content': content,
+                    'is_true': is_true == 'TRUE'
                 })
         
         return {
             'question' : question,
-            'choice' : choice,
+            'choice' : choices,
             'answer' : answer
             }
 
@@ -55,7 +54,7 @@ Apabila soal dan jawaban menggunakan bahasa inggris, anda wajib tetap menggunaka
 Anda akan diberikan sebuah pertanyaan dengan label [QUESTION]
 Anda akan diberikan sebuah total argumentasi TRUE-FALSE yang perlu dibuat [TOTAL_QUESTION]
 Anda ditugaskan untuk membuat soal baru tersebut dengan memahami kedua aspek yang telah diberikan : [QUESTION] dan [TOTAL_QUESTION] untuk menghasilkan soal baru yang serupa, tetapi dengan tingkat kesulitan yang lebih tinggi [NEW_QUESTION], pilihan argumen TRUE-FALSE berdasarkan soal baru [NEW_CHOICE], dan pembahasan jawabannya [NEW_ANSWER]
-Format dari [NEW_CHOICE] adalah "[No urutan].Argumen - TRUE/FALSE"
+Format dari [NEW_CHOICE] adalah "[Urutan Abjad]. Argumen - TRUE/FALSE"
 
 Langkah pembuatan :
 Hal yang pertama dibuat adalah pertanyaan yang akan dijadikan sebagai [NEW_QUESTION]
@@ -79,29 +78,6 @@ Apabila soal bertipe matematika atau perhitungan, diharapkan pada bagian pemaham
 Apabila soal berbahasa indonesia, wajib menggunakan bahasa indonesia untuk membuat [NEW_QUESTION] dan [NEW_CHOICE], tetapi untuk penjelasan yang ada pada [NEW_ANSWER] wajib menggunakan bahasa indonesia. Namun, untuk urutan keluaran tetap wajib seperti urutan ini : [NEW_QUESTION], [NEW_ANSWER], [NEW_CHOICE]
 Apabila soal berbahasa inggris, wajib menggunakan bahasa inggris untuk membuat [NEW_QUESTION] dan [NEW_CHOICE], tetapi untuk penjelasan yang ada pada [NEW_ANSWER] wajib menggunakan bahasa indonesia. Namun, untuk urutan keluaran tetap wajib seperti urutan ini : [NEW_QUESTION], [NEW_ANSWER], [NEW_CHOICE]
 Sebelum output dikeluarkan, mohon pastikan kembali urutan output adalah [NEW_QUESTION] dilanjutkan dengan [NEW_ANSWER] dan ditutup dengan [NEW_CHOICE]
-
-Contoh Output : 
-[NEW_QUESTION]: 
-Penggunaan plastik dalam kehidupan sehari-hari memiliki dampak pada kesehatan dan lingkungan. Produk plastik seperti kantong plastik yang sering digunakan dalam berbelanja memiliki sifat yang tahan lama dan tidak mudah terurai. Plastik dapat bertahan di lingkungan selama hingga 500 tahun. Dengan penggunaan yang masif dan berkelanjutan, plastik telah menyumbangkan jumlah sampah yang besar, yang memiliki dampak langsung pada ekosistem dan kesehatan manusia.  
-
-Kantong plastik dianggap sebagai salah satu penyumbang utama polusi karena sifatnya yang tahan lama dan produksinya yang murah. Dampak lingkungan dari kantong plastik muncul ketika mereka tidak dibuang dengan benar, mengakibatkan polusi visual di perkotaan dan bahkan mempengaruhi kehidupan hewan yang salah memakan plastik sebagai makanan. Selain itu, kantong plastik juga dapat merilis zat berbahaya seperti Bisphenol A (BPA) saat terurai, yang memiliki konsekuensi serius terhadap kesehatan, merusak hormon dan meningkatkan risiko penyakit seperti gangguan hormonal, kanker, dan efek reproduktif.
-
-Berbagai upaya telah dilakukan untuk mengurangi penggunaan kantong plastik, termasuk pengenaan tarif, pelarangan penggunaan, dan mempromosikan tas belanja yang dapat digunakan kembali. Meskipun demikian, tantangan tetap ada karena keefektifan kebijakan-kebijakan ini masih terbatas dan penggunaan kantong plastik masih tinggi di berbagai bagian dunia.
-
-[NEW_ANSWER]:
-1. Kantong plastik dapat bertahan hingga 500 tahun di lingkungan - TRUE
-Explanation: Kantong plastik terbuat dari polimer yang sangat tahan lama dan tidak mudah terurai secara biologis, sehingga memungkinkan mereka bertahan di lingkungan hingga berabad-abad.
-
-2. Penggunaan kembali kantong plastik tidak mempengaruhi kesehatan manusia - FALSE
-Explanation: Penggunaan kembali kantong plastik, terutama yang sudah tua dan mulai terurai, dapat melepaskan zat kimia seperti Bisphenol A (BPA), yang diketahui memberikan efek negatif pada kesehatan, termasuk pengaruh pada hormon dan potensi gangguan kesehatan serius lainnya.
-
-3. Kebijakan larangan penggunaan kantong plastik telah efektif mengurangi polusi plastik di seluruh dunia - FALSE
-Explanation: Meskipun telah ada upaya dan kebijakan larangan penggunaan kantong plastik di beberapa negara, penggunaannya masih tinggi di beberapa bagian dunia dan efektivitas kebijakan ini dalam mengurangi polusi secara global masih terbatas.
-
-[NEW_CHOICE]:
-1. Kantong plastik dapat bertahan hingga 500 tahun di lingkungan - TRUE
-2. Penggunaan kembali kantong plastik tidak mempengaruhi kesehatan manusia - FALSE
-3. Kebijakan larangan penggunaan kantong plastik telah efektif mengurangi polusi plastik di seluruh dunia - FALSE
 """
 
         complation = client.chat.completions.create(

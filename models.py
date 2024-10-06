@@ -13,9 +13,37 @@ class ParaphraseQuestion(BaseModel):
     raw_answer: Annotated[str, Form()]
 
 class CreateQuestion(BaseModel):
-    question: Annotated[str, Form()]
-    choice: Annotated[str, Form()]
-    raw_answer: Annotated[str, Form()]
+    question: Annotated[str, Form(), Field(default= """
+Misalkan sudut pada segitiga \( A B C \) adalah \( A, B, C \). jika \( \sin B+\sin C=2 \sin A \), maka nilai dari \( \tan \frac{B}{2} \tan \frac{C}{2} \) adalah ...
+""")]
+    choice: Annotated[str, Form(), Field(default= """
+A. \( \frac{1}{3} \)
+B. \( \frac{4}{3} \)
+C. \( \frac{1}{2} \sqrt{6} \)
+D. \( \frac{1}{6} \sqrt{3} \)
+E. \( \frac{21}{12} \)
+""")]
+    raw_answer: Annotated[str, Form(), Field(default = """
+Karena \( A, B, C \) adalah sudut-sudut pada segitiga maka berlaku \( A+B+C=180^{\circ} \)
+\[
+A=180^{\circ}-(B+C)
+\]
+
+Sehingga,
+\[
+\begin{array}{l}
+\sin B+\sin C=2 \sin A \\
+\sin B+\sin C=2 \sin \left(180^{\circ}-(B+C)\right) \\
+2 \sin \left(\frac{B+C}{2}\right) \cos \left(\frac{B-C}{2}\right)=2 \sin (B+C) \\
+2 \sin \left(\frac{B+C}{2}\right) \cos \left(\frac{B-C}{2}\right)=4 \sin \left(\frac{B+C}{2}\right) \cos \left(\frac{B+C}{2}\right) \\
+\cos \left(\frac{B-C}{2}\right)=2 \cos \left(\frac{B+C}{2}\right) \\
+\cos \left(\frac{B}{2}\right) \cos \left(\frac{C}{2}\right)+\sin \left(\frac{B}{2}\right) \sin \left(\frac{C}{2}\right)=2 \cos \left(\frac{B}{2}\right) \cos \left(\frac{C}{2}\right)-2 \sin \left(\frac{B}{2}\right) \sin \left(\frac{C}{2}\right) \\
+3 \sin \left(\frac{B}{2}\right) \sin \left(\frac{C}{2}\right)=\cos \left(\frac{B}{2}\right) \cos \left(\frac{C}{2}\right) \\
+\frac{\sin \left(\frac{B}{2}\right)}{\cos \left(\frac{B}{2}\right)} \frac{\sin \left(\frac{C}{2}\right)}{\cos \left(\frac{C}{2}\right)}=\frac{1}{3} \\
+\tan \left(\frac{B}{2}\right) \tan \left(\frac{C}{2}\right)=\frac{1}{3} \\
+\end{array}
+\] 
+""")]
 
 class CreateAnswer(BaseModel):
     question: Annotated[str, Form()]
@@ -37,8 +65,13 @@ class CreateQuestionIsian(BaseModel):
 
 
 class CreateQuestionTrueFalse(BaseModel):
-    question: Annotated[str, Form()]
-    total_question: Annotated[str, Form()]
+    question: Annotated[str, Form(), Field(default = """
+Penggunaan plastik ternyata menimbulkan masalah-masalah tertentu. Padahal, penggunaan plastik telah meluas hampir ke seluruh bidang kehidupan. Berbagai produk dan perala tan dihasilkan dari bahan ini karena dinilai lebih ekonornis, tidak mudah pecah, fleksibel, dan ringan. Salah satu contoh produk berbahan plastik yang paling sering dipakai oleh masyarakat adalah botol plastik.
+Peningkatan jumlah pemakaian botol plastik menimbulkan dampak bagi lingkungan ketika sudah tidak terpakai. Plastik adalah benda yang sulit terurai. Proses terurai plastik dapat berJangsung an tara 450 sampai 1.000 tahun. Padahal, di seluruh dunia, setiap tahun digunakan sekitar 50 miliar botol plastik sehingga diprediksikan pada mas a depan, lokasi pembuangan sampah hampir tidak akan cukup untuk menampung semuanya.
+Upaya dam ulang dan penggunaan kembali botol plastik tidak sepenuhnya mengatasi masalah lingkungan karena tingkat penggunaan botol plastik sangat tinggi. Selain itu, penggunaan kembali plastik yang didaur ulang menimbulkan masalah baru, yaitu masalah kesehatan. Hal ini disebabkan plastik yang terurai akan melepaskan zat kimia yang disebut Bisphenol A (BPA) ke dalam air. Zat BPAini memiliki beberapa efek negatif pada hormon tubuh yang dapat menimbulkan gangguan kesehatan, seperti gangguan perilaku, penurunan kekebalan, gangguan belajar, diabetes, dan obesitas.
+Kutipan di atas memiliki gagasan pokok …
+""" )]
+    total_question: Annotated[str, Form(),Field(default="5")]
 
 class CreateQuestionMultAnswer(BaseModel):
     question: Annotated[str, Form()]

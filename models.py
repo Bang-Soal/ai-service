@@ -100,3 +100,6 @@ Berbagai upaya telah dilakukan untuk mengurangi penggunaan kantong plastik, term
 2. Penggunaan kembali kantong plastik tidak mempengaruhi kesehatan manusia - FALSE
 3. Kebijakan larangan penggunaan kantong plastik telah efektif mengurangi polusi plastik di seluruh dunia - FALSE
 4. Kantong plastik baik untuk kehidupan manusia - FALSE""")]
+    
+class ExtractTextFromImage(BaseModel):
+    image_url: Annotated[str, Form(), Field(default="https://bangsoal.s3.ap-southeast-1.amazonaws.com/assets/CleanShot+2024-10-09+at+12.05.03%402x.png")]

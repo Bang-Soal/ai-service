@@ -14,6 +14,7 @@ from service.create_question_mult_answer import create_question_mult_answer
 from service.create_answer_isian import create_answer_isian
 from service.create_answer_mult_answer import create_answer_mult_answer
 from service.create_answer_tf import create_answer_tf
+from service.extract_text import ExtractTextFromImage as ExtractText
 router = APIRouter()
 
 @router.post('/predict-type-task', tags=["Predict Task Type"])
@@ -195,7 +196,17 @@ async def create_material_api():
     return JSONResponse({'data': "check api create-answer"})
 
 
+@router.post('/extract-text', tags=["Extract Text"])
+async def extract_text_api(
+    data: ExtractTextFromImage, access_key: str = Header(None)
+):
+    print(access_key)
+    if access_key == env_data.access_key() : 
+        response = ExtractText.extract_text(data.image_url)
+        return JSONResponse({'data': response})
+    else : 
+        return JSONResponse({'data': "wrong access key. access denied"})
+
 @router.get('/', tags=["main"])
 async def root():
-
     return JSONResponse({'data': "hello bang soal updated!"})
